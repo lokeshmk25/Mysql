@@ -1,0 +1,234 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| demo               |
+| information_schema |
+| mysql              |
+| payroll_service    |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.09 sec)
+
+mysql> create database Address_book_service;
+Query OK, 1 row affected (0.27 sec)
+
+mysql> show databases;
++----------------------+
+| Database             |
++----------------------+
+| address_book_service |
+| demo                 |
+| information_schema   |
+| mysql                |
+| payroll_service      |
+| performance_schema   |
+| sys                  |
++----------------------+
+7 rows in set (0.06 sec)
+
+mysql> use address_book_service;
+Database changed
+
+
+mysql> create table addressbook(
+    -> first_name varchar(50) not null,
+    -> last_name varchar(50) not null,
+    -> address varchar(300) not null,
+    -> city varchar(50) not null,
+    -> state varchar(50) not null,
+    -> zip int not null,
+    -> mobile_num int(10) default null,
+    -> email varchar(100) not null);
+Query OK, 0 rows affected, 1 warning (2.56 sec)
+
+mysql> show tables;
++--------------------------------+
+| Tables_in_address_book_service |
++--------------------------------+
+| addressbook                    |
++--------------------------------+
+1 row in set (0.06 sec)
+
+mysql> desc addressbook;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| first_name | varchar(50)  | NO   |     | NULL    |       |
+| last_name  | varchar(50)  | NO   |     | NULL    |       |
+| address    | varchar(300) | NO   |     | NULL    |       |
+| city       | varchar(50)  | NO   |     | NULL    |       |
+| state      | varchar(50)  | NO   |     | NULL    |       |
+| zip        | int          | NO   |     | NULL    |       |
+| mobile_num | int          | YES  |     | NULL    |       |
+| email      | varchar(100) | NO   |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+8 rows in set (0.09 sec)
+
+mysql> alter table addressbook modify mobile_num varchar(50) not null;
+Query OK, 1 row affected (3.32 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> update addressbook set mobile_num="9876543210" where first_name='lokesh';
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from addressbook;
++------------+------------+--------------------+-------+-----------+-------+------------+--------------------+
+| first_name | last_name  | address            | city  | state     | zip   | mobile_num | email              |
++------------+------------+--------------------+-------+-----------+-------+------------+--------------------+
+| lokesh     | muthukumar | kanni kovil street | ambur | tamilnadu | 65808 | 9876543210 | loki2345@gmail.com |
++------------+------------+--------------------+-------+-----------+-------+------------+--------------------+
+1 row in set (0.05 sec)
+
+mysql> insert into addressbook(first_name,last_name,address,city,state,zip,mobile_num,email) values("sathya","moorthy","krishnagiri","hosur","tamilnadu",656908,98765789210,"sathya2345@gmail.com");
+Query OK, 1 row affected (0.14 sec)
+
+mysql> select * from addressbook;
++------------+------------+--------------------+-------+-----------+--------+-------------+----------------------+
+| first_name | last_name  | address            | city  | state     | zip    | mobile_num  | email                |
++------------+------------+--------------------+-------+-----------+--------+-------------+----------------------+
+| lokesh     | muthukumar | kanni kovil street | ambur | tamilnadu |  65808 | 9876543210  | loki2345@gmail.com   |
+| sathya     | moorthy    | krishnagiri        | hosur | tamilnadu | 656908 | 98765789210 | sathya2345@gmail.com |
++------------+------------+--------------------+-------+-----------+--------+-------------+----------------------+
+2 rows in set (0.05 sec)
+
+mysql> update addressbook set last_name="dhoni" where first_name='lokesh';
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from addressbook;
++------------+-----------+--------------------+-------+-----------+--------+-------------+----------------------+
+| first_name | last_name | address            | city  | state     | zip    | mobile_num  | email                |
++------------+-----------+--------------------+-------+-----------+--------+-------------+----------------------+
+| lokesh     | dhoni     | kanni kovil street | ambur | tamilnadu |  65808 | 9876543210  | loki2345@gmail.com   |
+| sathya     | moorthy   | krishnagiri        | hosur | tamilnadu | 656908 | 98765789210 | sathya2345@gmail.com |
++------------+-----------+--------------------+-------+-----------+--------+-------------+----------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from addressbook;
++------------+-----------+--------------------+-------+-----------+--------+-------------+----------------------+
+| first_name | last_name | address            | city  | state     | zip    | mobile_num  | email                |
++------------+-----------+--------------------+-------+-----------+--------+-------------+----------------------+
+| lokesh     | dhoni     | kanni kovil street | ambur | tamilnadu |  65808 | 9876543210  | loki2345@gmail.com   |
+| sathya     | moorthy   | krishnagiri        | hosur | tamilnadu | 656908 | 98765789210 | sathya2345@gmail.com |
++------------+-----------+--------------------+-------+-----------+--------+-------------+----------------------+
+2 rows in set (0.00 sec)
+
+mysql> delete from addressbook where first_name="sathya";
+Query OK, 1 row affected (0.24 sec)
+
+mysql> select * from addressbook;
++------------+-----------+--------------------+-------+-----------+-------+------------+--------------------+
+| first_name | last_name | address            | city  | state     | zip   | mobile_num | email              |
++------------+-----------+--------------------+-------+-----------+-------+------------+--------------------+
+| lokesh     | dhoni     | kanni kovil street | ambur | tamilnadu | 65808 | 9876543210 | loki2345@gmail.com |
++------------+-----------+--------------------+-------+-----------+-------+------------+--------------------+
+1 row in set (0.01 sec)
+
+mysql> select * from addressbook where first_name="lokesh";
++------------+-----------+--------------------+-------+-----------+-------+------------+--------------------+
+| first_name | last_name | address            | city  | state     | zip   | mobile_num | email              |
++------------+-----------+--------------------+-------+-----------+-------+------------+--------------------+
+| lokesh     | dhoni     | kanni kovil street | ambur | tamilnadu | 65808 | 9876543210 | loki2345@gmail.com |
++------------+-----------+--------------------+-------+-----------+-------+------------+--------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from addressbook where city="chennai";
++------------+-----------+-------------+---------+-----------+-------+-------------+------------------+
+| first_name | last_name | address     | city    | state     | zip   | mobile_num  | email            |
++------------+-----------+-------------+---------+-----------+-------+-------------+------------------+
+| kk         | hema      | thiruvallur | chennai | tamilnadu | 65238 | 98765789560 | kk2345@gmail.com |
++------------+-----------+-------------+---------+-----------+-------+-------------+------------------+
+1 row in set (0.00 sec)
+
+
+mysql> select count(*) from addressbook;
++----------+
+| count(*) |
++----------+
+|        2 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> insert into addressbook(first_name,last_name,address,city,state,zip,mobile_num,email) values("sathya","moorthy","krishnagiri","hosur","tamilnadu",656908,98765789210,"sathya2345@gmail.com");
+Query OK, 1 row affected (0.17 sec)
+
+mysql> select * from addressbook;
++------------+-----------+--------------------+---------+-----------+--------+-------------+----------------------+
+| first_name | last_name | address            | city    | state     | zip    | mobile_num  | email                |
++------------+-----------+--------------------+---------+-----------+--------+-------------+----------------------+
+| lokesh     | dhoni     | kanni kovil street | ambur   | tamilnadu |  65808 | 9876543210  | loki2345@gmail.com   |
+| kk         | hema      | thiruvallur        | chennai | tamilnadu |  65238 | 98765789560 | kk2345@gmail.com     |
+| sathya     | moorthy   | krishnagiri        | hosur   | tamilnadu | 656908 | 98765789210 | sathya2345@gmail.com |
++------------+-----------+--------------------+---------+-----------+--------+-------------+----------------------+
+3 rows in set (0.00 sec)
+
+mysql> select count(*) from addressbook where state="tamilnadu";
++----------+
+| count(*) |
++----------+
+|        3 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select * from addressbook order by first_name;
++------------+-----------+--------------------+---------+-----------+--------+-------------+----------------------+
+| first_name | last_name | address            | city    | state     | zip    | mobile_num  | email                |
++------------+-----------+--------------------+---------+-----------+--------+-------------+----------------------+
+| kk         | hema      | thiruvallur        | chennai | tamilnadu |  65238 | 98765789560 | kk2345@gmail.com     |
+| lokesh     | dhoni     | kanni kovil street | ambur   | tamilnadu |  65808 | 9876543210  | loki2345@gmail.com   |
+| sathya     | moorthy   | krishnagiri        | hosur   | tamilnadu | 656908 | 98765789210 | sathya2345@gmail.com |
++------------+-----------+--------------------+---------+-----------+--------+-------------+----------------------+
+3 rows in set (0.07 sec)
+
+mysql> select * from addressbook;
++------------+-----------+------+--------------------+---------+-----------+--------+-------------+----------------------+
+| first_name | last_name | type | address            | city    | state     | zip    | mobile_num  | email                |
++------------+-----------+------+--------------------+---------+-----------+--------+-------------+----------------------+
+| lokesh     | dhoni     | NULL | kanni kovil street | ambur   | tamilnadu |  65808 | 9876543210  | loki2345@gmail.com   |
+| kk         | hema      | NULL | thiruvallur        | chennai | tamilnadu |  65238 | 98765789560 | kk2345@gmail.com     |
+| sathya     | moorthy   | NULL | krishnagiri        | hosur   | tamilnadu | 656908 | 98765789210 | sathya2345@gmail.com |
++------------+-----------+------+--------------------+---------+-----------+--------+-------------+----------------------+
+3 rows in set (0.00 sec)
+
+
+mysql> update addressbook set type='friends' where first_name="kk" or first_name="sathya";
+Query OK, 2 rows affected (0.10 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from addressbook;
++------------+-----------+---------+--------------------+---------+-----------+--------+-------------+----------------------+
+| first_name | last_name | type    | address            | city    | state     | zip    | mobile_num  | email                |
++------------+-----------+---------+--------------------+---------+-----------+--------+-------------+----------------------+
+| lokesh     | dhoni     | NULL    | kanni kovil street | ambur   | tamilnadu |  65808 | 9876543210  | loki2345@gmail.com   |
+| kk         | hema      | friends | thiruvallur        | chennai | tamilnadu |  65238 | 98765789560 | kk2345@gmail.com     |
+| sathya     | moorthy   | friends | krishnagiri        | hosur   | tamilnadu | 656908 | 98765789210 | sathya2345@gmail.com |
++------------+-----------+---------+--------------------+---------+-----------+--------+-------------+----------------------+
+3 rows in set (0.06 sec)
+
+
+mysql> update addressbook set type='family' where first_name="lokesh";
+Query OK, 1 row affected (0.16 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from addressbook;
++------------+-----------+---------+--------------------+---------+-----------+--------+-------------+----------------------+
+| first_name | last_name | type    | address            | city    | state     | zip    | mobile_num  | email                |
++------------+-----------+---------+--------------------+---------+-----------+--------+-------------+----------------------+
+| lokesh     | dhoni     | family  | kanni kovil street | ambur   | tamilnadu |  65808 | 9876543210  | loki2345@gmail.com   |
+| kk         | hema      | friends | thiruvallur        | chennai | tamilnadu |  65238 | 98765789560 | kk2345@gmail.com     |
+| sathya     | moorthy   | friends | krishnagiri        | hosur   | tamilnadu | 656908 | 98765789210 | sathya2345@gmail.com |
++------------+-----------+---------+--------------------+---------+-----------+--------+-------------+----------------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from addressbook;
++------------+-----------+------------------+--------------------+---------+-----------+--------+-------------+----------------------+
+| first_name | last_name | type             | address            | city    | state     | zip    | mobile_num  | email                |
++------------+-----------+------------------+--------------------+---------+-----------+--------+-------------+----------------------+
+| lokesh     | dhoni     | family & friends | kanni kovil street | ambur   | tamilnadu |  65808 | 9876543210  | loki2345@gmail.com   |
+| kk         | hema      | friends          | thiruvallur        | chennai | tamilnadu |  65238 | 98765789560 | kk2345@gmail.com     |
+| sathya     | moorthy   | friends          | krishnagiri        | hosur   | tamilnadu | 656908 | 98765789210 | sathya2345@gmail.com |
++------------+-----------+------------------+--------------------+---------+-----------+--------+-------------+----------------------+
+3 rows in set (0.06 sec)
